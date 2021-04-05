@@ -20,4 +20,5 @@ public final class Drink extends Product {
     public Product applyRating(Rating newRating) {
         return new Drink(getId(),getName(),getPrice(),newRating);
     }
+
 }
