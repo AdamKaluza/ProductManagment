@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import static labs.pm.data.Rating.*;
 
-public class Product {
+public abstract class Product {
 
     public static final BigDecimal DISCOUNT_RATE = BigDecimal.valueOf(0.1);
     private int id;
@@ -49,9 +49,9 @@ public class Product {
     public BigDecimal getDiscount() {
         return price.multiply(DISCOUNT_RATE).setScale(2, RoundingMode.HALF_UP);
     }
-    public Product applyRating(Rating newRating){
-        return new Product(id,name,price,newRating);
-    }
+    public abstract Product applyRating(Rating newRating);
+//        return new Product(id,name,price,newRating);
+//    }
 
     @Override
     public String toString() {
