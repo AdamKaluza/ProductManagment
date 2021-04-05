@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import static labs.pm.data.Rating.*;
 
-public abstract class Product {
+public abstract class Product implements Rateable<Product> {
 
     public static final BigDecimal DISCOUNT_RATE = BigDecimal.valueOf(0.1);
     private int id;
@@ -43,7 +43,8 @@ public abstract class Product {
         return price;
     }
 
-    public Rating getRaiting() {
+    @Override
+    public Rating getRating() {
         return rating;
     }
 
@@ -51,10 +52,6 @@ public abstract class Product {
         return price.multiply(DISCOUNT_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 
-    public abstract Product applyRating(Rating newRating);
-
-    //        return new Product(id,name,price,newRating);
-//    }
     public LocalDate getBestBefore() {
         return LocalDate.now();
     }
