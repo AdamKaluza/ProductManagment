@@ -63,6 +63,7 @@ public class ProductManager {
                 product.getRating().getStars(),
                 dateFormat.format(product.getBestBefore())));
         txt.append('\n');
+        Collections.sort(reviews);
 
         for (Review review : reviews) {
             txt.append(MessageFormat.format(resources.getString("review"),
@@ -75,6 +76,40 @@ public class ProductManager {
             txt.append('\n');
         }
         System.out.println(txt);
+    }
+    public void printProductReport(int id) {
+        List<Review> reviews = products.get(product);
+        StringBuilder txt = new StringBuilder();
+        txt.append(MessageFormat.format(resources.getString("product"),
+                product.getName(),
+                moneyFormat.format(product.getPrice()),
+                product.getRating().getStars(),
+                dateFormat.format(product.getBestBefore())));
+        txt.append('\n');
+        Collections.sort(reviews);
+
+        for (Review review : reviews) {
+            txt.append(MessageFormat.format(resources.getString("review"),
+                    review.getRating().getStars(),
+                    review.getComments()));
+            txt.append('\n');
+        }
+        if (reviews.isEmpty()){
+            txt.append(resources.getString("no.reviews"));
+            txt.append('\n');
+        }
+        System.out.println(txt);
+    }
+
+    public Product findProduct(int id){
+        Product result = null;
+        for (Product product : products.keySet()){
+            if (product.getId() == id) {
+                result = product;
+                break;
+            }
+        }
+        return result;
     }
 }
 

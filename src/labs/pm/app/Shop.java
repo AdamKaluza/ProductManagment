@@ -19,6 +19,12 @@ public class Shop {
         pm.reviewProduct(p1, Rating.FIVE_STAR,"Perfect");
         pm.reviewProduct(p1, Rating.THREE_STAR,"Add some lemon");
         pm.printProductReport(p1);
+
+        Product p2 = pm.createProduct(102,"Coffee",BigDecimal.valueOf(1.99),Rating.NOT_RATED);
+        p2 = pm.reviewProduct(p2,Rating.THREE_STAR,"coffee was ok");
+        p2 = pm.reviewProduct(p2,Rating.ONE_STAR,"coffee was terrible");
+        p2 = pm.reviewProduct(p2,Rating.FIVE_STAR,"Perfect with spoons of sugar");
+        pm.printProductReport(p2);
 //        Product p2 = pm.createProduct(102, "Coffe", BigDecimal.valueOf(1.99), Rating.FOUR_STAR);
 //        Product p3 = pm.createProduct(103, "Cake", BigDecimal.valueOf(3.99), Rating.FIVE_STAR, LocalDate.now().plusDays(2));
 //        Product p4 = pm.createProduct(105,"Cookie",BigDecimal.valueOf(3.99),Rating.TWO_STAR,LocalDate.now());
