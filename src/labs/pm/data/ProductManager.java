@@ -123,7 +123,7 @@ public class ProductManager {
         return products.keySet().stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
-                .orElseGet(() -> null);
+                .get();
 //        Product result = null;
 //        for (Product product : products.keySet()) {
 //            if (product.getId() == id) {
