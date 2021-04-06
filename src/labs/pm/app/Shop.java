@@ -27,10 +27,12 @@ public class Shop {
 
         Comparator<Product> ratingSorter = (p1,p2) -> p2.getRating().ordinal() - p1.getRating().ordinal();
         Comparator<Product> priceSorter = (p1,p2) -> p2.getPrice().compareTo(p1.getPrice());
-        pm.printProducts(ratingSorter);
+       // pm.printProducts(ratingSorter);
        // pm.printProducts((p1,p2) -> p2.getRating().ordinal() - p1.getRating().ordinal());
        // pm.printProducts((p1,p2) -> p2.getPrice().compareTo(p1.getPrice()));
-        pm.printProducts(priceSorter);
+       // pm.printProducts(priceSorter);
+        pm.printProducts(ratingSorter.thenComparing(priceSorter));
+        pm.printProducts(ratingSorter.thenComparing(priceSorter).reversed());
 
 
     }

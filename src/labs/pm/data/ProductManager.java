@@ -23,6 +23,7 @@ public class ProductManager {
     public ProductManager(Locale locale) {
         this(locale.toLanguageTag());
     }
+
     public ProductManager(String languageTag) {
         changeLocale(languageTag);
     }
@@ -33,11 +34,11 @@ public class ProductManager {
         return product;
     }
 
-    public void changeLocale(String languageTag){
+    public void changeLocale(String languageTag) {
         formatter = formatters.getOrDefault(languageTag, formatters.get("en-Gb"));
     }
 
-    public static Set<String> getSupportedLocales(){
+    public static Set<String> getSupportedLocales() {
         return formatters.keySet();
     }
 
@@ -85,11 +86,11 @@ public class ProductManager {
         printProductReport(findProduct(id));
     }
 
-    public void printProducts(Comparator<Product> sorter){
+    public void printProducts(Comparator<Product> sorter) {
         List<Product> productList = new ArrayList<>(products.keySet());
         productList.sort(sorter);
         StringBuilder txt = new StringBuilder();
-        for (Product product : productList){
+        for (Product product : productList) {
             txt.append(formatter.formatProduct(product));
             txt.append('\n');
         }
@@ -101,14 +102,18 @@ public class ProductManager {
     }
 
     public Product findProduct(int id) {
-        Product result = null;
-        for (Product product : products.keySet()) {
-            if (product.getId() == id) {
-                result = product;
-                break;
-            }
-        }
-        return result;
+        return products.keySet().stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElseGet(() -> null);
+//        Product result = null;
+//        for (Product product : products.keySet()) {
+//            if (product.getId() == id) {
+//                result = product;
+//                break;
+//            }
+//        }
+//        return result;
     }
 
     private static class ResourceFormatter {
