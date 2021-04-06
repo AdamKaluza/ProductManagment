@@ -10,9 +10,15 @@ public class Shop {
     public static void main(String[] args) {
         ProductManager pm = new ProductManager("en-GB");
 
-        pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), Rating.NOT_RATED);
+//        pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), Rating.NOT_RATED);
+        pm.parseProduct("D,101,Tea,1.99,0,2021-04-08");
         pm.printProductReport(101);
-        pm.parseReview("1071,4,Nice Hot Cup Of tea");
+        pm.parseReview("101,4,Nice Hot Cup Of tea");
+        pm.parseReview("101,2,Rather weak tea");
+        pm.parseReview("101,4,Goood tea");
+        pm.parseReview("101,5,Perfect");
+        pm.parseReview("101,3,Add some lemon\"");
+        pm.printProductReport(101);
 
 //        pm.reviewProduct(101, Rating.FOUR_STAR, "Nice Hot cup of tea");
 //        pm.reviewProduct(101, Rating.TWO_STAR, "Rather weak tea");
@@ -20,7 +26,8 @@ public class Shop {
 //        pm.reviewProduct(101, Rating.FOUR_STAR, "Goood tea");
 //        pm.reviewProduct(101, Rating.FIVE_STAR, "Perfect");
 //        pm.reviewProduct(101, Rating.THREE_STAR, "Add some lemon");
-        pm.printProductReport(101);
+
+
 
 //        pm.createProduct(102, "Coffee", BigDecimal.valueOf(6.99), Rating.NOT_RATED);
 //        pm.reviewProduct(102, Rating.THREE_STAR, "coffee was ok");
