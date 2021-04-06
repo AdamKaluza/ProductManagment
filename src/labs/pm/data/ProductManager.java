@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class ProductManager {
@@ -20,6 +22,8 @@ public class ProductManager {
                     "fr-FR", new ResourceFormatter(Locale.FRANCE),
                     "ru-RU", new ResourceFormatter(new Locale("ru", "RU")),
                     "zh-CN", new ResourceFormatter(Locale.CHINA));
+
+    private static final Logger logger = Logger.getLogger(ProductManager.class.getName());
 
 
     public ProductManager(Locale locale) {
@@ -49,6 +53,14 @@ public class ProductManager {
         products.putIfAbsent(product, new ArrayList<>());
         return product;
     }
+    public Product reviewProduct(int id, Rating rating, String comments) {
+        try {
+            return reviewProduct(findProduct(id), rating, comments);
+        } catch (ProductManagerException e) {
+            logger.log(Level.INFO,e.getMessage());
+        }
+        return null;
+    }
 
     public Product reviewProduct(Product product, Rating rating, String comments) {
         List<Review> reviews = products.get(product);
@@ -72,7 +84,11 @@ public class ProductManager {
     }
 
     public void printProductReport(int id) {
-        printProductReport(findProduct(id));
+        try {
+            printProductReport(findProduct(id));
+        } catch (ProductManagerException e) {
+            logger.log(Level.INFO,e.getMessage());
+        }
     }
 
     public void printProductReport(Product product) {
@@ -115,15 +131,13 @@ public class ProductManager {
         System.out.println(txt);
     }
 
-    public Product reviewProduct(int id, Rating rating, String comments) {
-        return reviewProduct(findProduct(id), rating, comments);
-    }
 
-    public Product findProduct(int id) {
+
+    public Product findProduct(int id) throws ProductManagerException {
         return products.keySet().stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new ProductManagerException("Product with id " + id + " not found"));
 //        Product result = null;
 //        for (Product product : products.keySet()) {
 //            if (product.getId() == id) {
@@ -141,7 +155,7 @@ public class ProductManager {
                                 product -> product.getRating().getStars(),
                                 Collectors.collectingAndThen(
                                         Collectors.summingDouble(
-                                        product -> product.getDiscount().doubleValue()),
+                                                product -> product.getDiscount().doubleValue()),
                                         discount -> formatter.moneyFormat.format(discount))));
 
     }

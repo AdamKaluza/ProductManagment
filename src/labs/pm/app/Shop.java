@@ -11,8 +11,8 @@ public class Shop {
         ProductManager pm = new ProductManager("en-GB");
 
         pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), Rating.NOT_RATED);
-       // pm.printProductReport(42);
-        pm.reviewProduct(54, Rating.FOUR_STAR, "Nice Hot cup of tea");
+        pm.printProductReport(101;
+        pm.reviewProduct(101, Rating.FOUR_STAR, "Nice Hot cup of tea");
         pm.reviewProduct(101, Rating.TWO_STAR, "Rather weak tea");
         pm.reviewProduct(101, Rating.FOUR_STAR, "Fine tea");
         pm.reviewProduct(101, Rating.FOUR_STAR, "Goood tea");
