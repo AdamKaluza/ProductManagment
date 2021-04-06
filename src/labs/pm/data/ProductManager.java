@@ -96,10 +96,8 @@ public class ProductManager {
 //            txt.append('\n');
 //        }
 
-
         System.out.println(txt);
     }
-
 
     public void printProducts(Predicate<Product> filter, Comparator<Product> sorter) {
 
@@ -134,6 +132,18 @@ public class ProductManager {
 //            }
 //        }
 //        return result;
+    }
+
+    public Map<String, String> getDiscounts() {
+        return products.keySet().stream()
+                .collect(
+                        Collectors.groupingBy(
+                                product -> product.getRating().getStars(),
+                                Collectors.collectingAndThen(
+                                        Collectors.summingDouble(
+                                        product -> product.getDiscount().doubleValue()),
+                                        discount -> formatter.moneyFormat.format(discount))));
+
     }
 
     private static class ResourceFormatter {

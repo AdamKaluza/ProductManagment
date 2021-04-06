@@ -4,6 +4,7 @@ import labs.pm.data.*;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Shop {
     public static void main(String[] args) {
@@ -23,16 +24,16 @@ public class Shop {
         pm.reviewProduct(102, Rating.THREE_STAR, "coffee was ok");
         pm.reviewProduct(102, Rating.ONE_STAR, "coffee was terrible");
         pm.reviewProduct(102, Rating.FIVE_STAR, "Perfect with spoons of sugar");
-      //  pm.printProductReport(102);
+        pm.printProductReport(102);
 
-        Comparator<Product> ratingSorter = (p1,p2) -> p2.getRating().ordinal() - p1.getRating().ordinal();
-        Comparator<Product> priceSorter = (p1,p2) -> p2.getPrice().compareTo(p1.getPrice());
-       // pm.printProducts(ratingSorter);
-       // pm.printProducts((p1,p2) -> p2.getRating().ordinal() - p1.getRating().ordinal());
-       // pm.printProducts((p1,p2) -> p2.getPrice().compareTo(p1.getPrice()));
-       // pm.printProducts(priceSorter);
-        pm.printProducts(ratingSorter.thenComparing(priceSorter));
-        pm.printProducts(ratingSorter.thenComparing(priceSorter).reversed());
+        pm.printProducts(p -> p.getPrice().floatValue() < 2, (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal());
+//        pm.printProducts(p -> p.getPrice().floatValue() < 2, (p1, p2) -> p2.getPrice().compareTo(p1.getPrice()));
+//
+//        Comparator<Product> ratingSorter = (p1,p2) -> p2.getRating().ordinal() - p1.getRating().ordinal();
+//        Comparator<Product> priceSorter = (p1,p2) -> p2.getPrice().compareTo(p1.getPrice());
+//
+//        pm.printProducts(ratingSorter.thenComparing(priceSorter));
+//        pm.printProducts(ratingSorter.thenComparing(priceSorter).reversed());
 
 
     }
