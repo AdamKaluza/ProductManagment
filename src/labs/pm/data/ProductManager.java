@@ -49,19 +49,25 @@ public class ProductManager {
     }
 
     public Product reviewProduct(Product product, Rating rating, String comments) {
-
         List<Review> reviews = products.get(product);
         products.remove(product, reviews);
         reviews.add(new Review(rating, comments));
 
-        int sum = 0;
-        for (Review review : reviews) {
-            sum += review.getRating().ordinal();
-        }
+        product = product.applyRating(Rateable.convert((int) Math.round(reviews.stream()
+                        .mapToInt(r -> r.getRating().ordinal())
+                        .average()
+                        .orElse(0))));
 
-        product = product.applyRating(Rateable.convert(Math.round((float) sum / reviews.size())));
+//        int sum = 0;
+//        for (Review review : reviews) {
+//            sum += review.getRating().ordinal();
+//        }
+//
+//        product = product.applyRating(Rateable.convert(Math.round((float) sum / reviews.size())));
+
         products.put(product, reviews);
         return product;
+
     }
 
     public void printProductReport(Product product) {
