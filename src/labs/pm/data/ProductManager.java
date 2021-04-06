@@ -3,6 +3,7 @@ package labs.pm.data;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -24,6 +25,9 @@ public class ProductManager {
                     "zh-CN", new ResourceFormatter(Locale.CHINA));
 
     private static final Logger logger = Logger.getLogger(ProductManager.class.getName());
+    private ResourceBundle config = ResourceBundle.getBundle("labs.pm.data.config");
+    private MessageFormat reviewFormat = new MessageFormat(config.getString("review.data.format"));
+    private MessageFormat productFormat = new MessageFormat(config.getString("product.data.format"));
 
 
     public ProductManager(Locale locale) {
@@ -129,6 +133,17 @@ public class ProductManager {
 //            txt.append('\n');
 //        }
         System.out.println(txt);
+    }
+
+    public void parseReview(String txt) {
+        try {
+            Object[] values = reviewFormat.parse(txt);
+            reviewProduct(Integer.parseInt((String)values[0]),
+                    Rateable.convert(Integer.parseInt((String) values[1])),
+                    (String) values[2]);
+        } catch (ParseException e) {
+            logger.log(Level.WARNING, "Error parsing review " + txt, e);
+        }
     }
 
 
